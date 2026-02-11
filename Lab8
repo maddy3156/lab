@@ -6,7 +6,6 @@ struct Node {
     struct Node* next;
 };
 
-/* Insert at beginning */
 struct Node* insert_at_beginning(struct Node* head, int data) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
 
@@ -18,10 +17,9 @@ struct Node* insert_at_beginning(struct Node* head, int data) {
     newNode->data = data;
     newNode->next = head;
 
-    return newNode;   // New node becomes head
+    return newNode;  
 }
 
-/* Insert at end */
 struct Node* insert_at_end(struct Node* head, int data) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
 
@@ -47,7 +45,7 @@ struct Node* insert_at_end(struct Node* head, int data) {
     return head;
 }
 
-/* Traverse and print list */
+
 void printList(struct Node* head) {
     struct Node* temp = head;
 
@@ -59,7 +57,7 @@ void printList(struct Node* head) {
     printf("NULL\n");
 }
 
-/* Free memory */
+
 void freeList(struct Node* head) {
     struct Node* temp;
 
@@ -70,24 +68,23 @@ void freeList(struct Node* head) {
     }
 }
 
-/* Main function */
+
 int main() {
     struct Node* head = NULL;
 
-    // Insert at beginning
+   
     head = insert_at_beginning(head, 10);
     head = insert_at_beginning(head, 20);
     head = insert_at_beginning(head, 30);
 
-    // Insert at end
+ 
     head = insert_at_end(head, 40);
     head = insert_at_end(head, 50);
 
-    // Print the list
+ 
     printf("Linked List:\n");
     printList(head);
 
-    // Free allocated memory
     freeList(head);
 
     return 0;
