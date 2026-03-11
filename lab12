@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int bookID;
+    struct Node* next;
+};
+
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (!newNode) {
+        printf("Memory allocation failed!\n");
+        return NULL;
+    }
+    newNode->bookID = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void insert_at_beginning(struct Node** head, int data) {
+    struct Node* newNode = createNode(data);
+    if (!newNode) return;
+    newNode->next = *head;
+    *head = newNode;
+    printf("Book %d (Priority) issued.\n", data);
+}
+
+void insert_at_end(struct Node** head, int data) {
+    struct Node* newNode = createNode(data);
+    if (!newNode) return;
+    if (*head == NULL) {
+        *head = newNode;
+        printf("Book %d issued.\n", data);
+        return;
+    }
+    struct Node* temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    printf("Book %d issued.\n", data);
+}
+
+// Fixed: Removed space from "delete node"
+void delete_node(struct Node** head, int key) {
+    struct Node *temp = *head, *prev = NULL;
+
+    if (temp != NULL && temp->bookID == key) {
+        *head = temp->next;
+        free(temp);
+        printf("Book %d returned successfully.\n", key);
+        return;
+    }
+
+    while (temp != NULL && temp->bookID != key) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL) {
+        printf("Book ID %d not found in issued list.\n", key);
+        return;
+    }
+
+    prev->next = temp->next;
+    free(temp);
+    printf("Book %d returned successfully.\n", key);
+}
+
+void traverse(struct Node* head) {
+    if (head == NULL) {
+        printf("No books are currently issued.\n");
+        return;
+    }
+    struct Node* temp = head;
+    printf("Currently Issued Book IDs: ");
+    while (temp != NULL) {
+        printf("%d -> ", temp->bookID);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* libraryHead = NULL;
+
+    insert_at_end(&libraryHead, 101);     
+    insert_at_end(&libraryHead, 102);      
+    insert_at_beginning(&libraryHead, 99);
+    
+    traverse(libraryHead);              
+    
+    delete_node(&libraryHead, 101);        
+    traverse(libraryHead);                
+
+    return 0;
+}
