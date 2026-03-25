@@ -22,7 +22,7 @@ int main() {
             smallest = arr[i];
     }
 
-    printf("Largest element = %d\n", largest);
+    printf("Large element = %d\n", largest);
     printf("Smallest element = %d\n", smallest);
 
     return 0;
